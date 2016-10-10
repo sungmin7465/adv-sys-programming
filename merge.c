@@ -5,6 +5,8 @@
 
 int readaline_and_out(FILE *fin, FILE *fout);
 
+#define MAX_STRLEN 100
+
 int
 main(int argc, char *argv[])
 {
@@ -66,23 +68,32 @@ leave0:
 
 /* Read a line from fin and write it to fout */
 /* return 1 if fin meets end of file */
-int
-readaline_and_out(FILE *fin, FILE *fout)
+	//lenth of line  <= 100
+int readaline_and_out(FILE *fin, FILE *fout)
 {    
-    int ch, count = 0;
+    int i = 0, ch, count = 0;
+    char tmp_str[MAX_STRLEN];
 
     do {
-        if ((ch = fgetc(fin)) == EOF) {
+        if ((tmp_str[count] = fgetc(fin)) == EOF) {
             if (!count)
                 return 1;
             else {
-                fputc(0x0a, fout);
+                tmp_str[count] = 0x0a; //fputc(0x0a, fout);
                 break;
             }
         }
-        fputc(ch, fout);
-        count++;
-    } while (ch != 0x0a);
+
+    } while (tmp_str[count++] != 0x0a);
+
+
+   for(i=count; i>=0; i--) {
+
+	fputc(tmp_str[i], fout);
+
+   }
+        
+
     return 0;
 }
 
