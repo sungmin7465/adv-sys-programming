@@ -72,27 +72,23 @@ leave0:
 int readaline_and_out(FILE *fin, FILE *fout)
 {    
     int i = 0, ch, count = 0;
-    char tmp_str[MAX_STRLEN];
+    int tmp_str[MAX_STRLEN] = {0,};
 
     do {
         if ((tmp_str[count] = fgetc(fin)) == EOF) {
             if (!count)
                 return 1;
             else {
-                tmp_str[count] = 0x0a; //fputc(0x0a, fout);
+                tmp_str[count] = 0x0a; 
                 break;
             }
         }
 
     } while (tmp_str[count++] != 0x0a);
 
-
    for(i=count; i>=0; i--) {
-
 	fputc(tmp_str[i], fout);
-
    }
-        
 
     return 0;
 }
